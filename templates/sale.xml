@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="extend_sale_order_portal_template" inherit_id="sale.sale_order_portal_template" name="Sales Order Portal Template">
+        <xpath expr="//div[@class='o_download_pdf btn-toolbar flex-sm-nowrap']" position="replace">
+            <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                <div class="btn-group flex-grow-1 mr-1 mb-1">
+                    <a class="btn btn-secondary btn-block o_download_btn" t-att-href="sale_order.get_portal_url(report_type='pdf', download=True)" title="Download"><i class="fa fa-download"/> Download</a>
+                </div>
+                <div class="btn-group flex-grow-1 mr-1 mb-1">
+                    <a class="btn btn-secondary btn-block o_print_btn o_portal_invoice_print" t-att-href="sale_order.get_portal_url(report_type='pdf')" id="print_invoice_report" title="Print" target="_blank"><i class="fa fa-print"/> Print</a>
+                </div>
+                <div class="btn-group flex-grow-1 mb-1">
+                    <a role="button" t-att-class="'btn btn-danger btn-block o_print_btn o_portal_invoice_print' if sale_order.status_desc in ('confirm', 'delivery') else 'btn btn-danger btn-block o_print_btn o_portal_invoice_print disabled'" data-toggle="modal" data-target="#modalcancel" href="#"> <i class="fa fa-times"/> Cancel</a>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="before">
+            <div role="dialog" class="modal fade" id="modalcancel">
+                <div class="modal-dialog">
+                    <form id="decline" method="POST" t-attf-action="/my/orders/#{sale_order.id}/cancel?access_token=#{sale_order.access_token}" class="modal-content">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <header class="modal-header">
+                            <h4 class="modal-title">Cancel Order</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;</button>
+                        </header>
+                        <main class="modal-body">
+                            <p>
+                                Are you sure you want to <strong>cancel</strong> this order?
+                            </p>
+                        </main>
+                        <footer class="modal-footer">
+                            <button type="submit" t-att-id="sale_order.id" class="btn btn-danger"><i class="fa fa-times"></i> Confirm</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="extend_portal_my_home_sale" name="Portal My Home : sales entries" inherit_id="sale.portal_my_home_sale" priority="20">
+        <xpath expr="//t[@t-if='quotation_count']" position="replace">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">To Confirm</t>
+                <t t-set="url" t-value="'/my/confirm'"/>
+                <t t-set="count" t-value="to_confirm_count"/>
+            </t>
+        </xpath>
+
+        <xpath expr="//t[@t-if='order_count']" position="replace">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">To Ship</t>
+                <t t-set="url" t-value="'/my/ship'"/>
+                <t t-set="count" t-value="to_ship_count"/>
+            </t>
+
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">To Receive</t>
+                <t t-set="url" t-value="'/my/receive'"/>
+                <t t-set="count" t-value="to_receive_count"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="extend_portal_my_home_menu_sale" name="Portal layout : sales menu entries" inherit_id="sale.portal_my_home_menu_sale" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'quote' or sale_order and sale_order.state in ('sent')" t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}">
+                <a t-if="sale_order" t-attf-href="/my/confirm?{{ keep_query() }}">To Confirm</a>
+                <t t-else="">To Confirm</t>
+            </li>
+            <li t-if="page_name == 'order' and default_url == '/my/ship' or sale_order and sale_order.state not in ('sent', 'cancel') and sale_order.status_desc == 'delivery'" t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}">
+                <a t-if="sale_order" t-attf-href="/my/ship?{{ keep_query() }}">To Ship</a>
+                <t t-else="">To Ship</t>
+            </li>
+            <li t-if="page_name == 'order' and default_url == '/my/receive' or sale_order and sale_order.state not in ('sent', 'cancel') and sale_order.status_desc == 'delivered'" t-attf-class="breadcrumb-item #{'active ' if not sale_order else ''}">
+                <a t-if="sale_order" t-attf-href="/my/receive?{{ keep_query() }}">To Receive</a>
+                <t t-else="">To Receive</t>
+            </li>
+            <li t-if="sale_order" class="breadcrumb-item active">
+                <span t-field="sale_order.type_name"/>
+                <t t-esc="sale_order.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <template id="extend_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+            <div class="page">
+                <div class="oe_structure"/>
+                <table class="table table-sm" width="100%">
+                    <tbody>
+                        <tr width="100%">
+                            <td width="50%" style="text-align: center">
+                                <h3>DELIVERY RECEIPT</h3>
+                                <div t-field="doc.company_id.partner_id.name" style="font-weight: 600" />
+                                <div t-field="doc.company_id.street" />
+                                <div>
+                                    <span t-field="doc.company_id.phone" /> / <span t-field="doc.company_id.email"></span>
+                                </div>
+                                <div t-field="doc.company_id.website" />
+                            </td>
+                            <td width="50%" style="vertical-align: top">
+                                <table width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td width="25%" style="background: #ccc; padding: 3px 5px">Date:</td>
+                                            <td width="75%">
+                                                <span t-field="doc.expected_date"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #ccc; padding: 3px 5px">Order #:</td>
+                                            <td>
+                                                <span t-field="doc.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #ccc; padding: 3px 5px">Paid by:</td>
+                                            <td>
+                                                <span t-field="doc.transaction_ids.acquirer_id.name"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <br/>
+                <table width="100%">
+                    <tbody>
+                        <tr width="100%">
+                            <td width="50%" style="vertical-align: top">
+                                <table width="100%">
+                                    <tbody>
+                                        <tr width="100%">
+                                            <td>
+                                                <div style="background: #ccc; width: 100%; padding: 5px 5px">
+                                                    <strong>Delivery Partner</strong>
+                                                </div>
+                                                <div t-field="doc.picking_ids.partner_id"
+                        t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="50%" style="vertical-align: top">
+                                <table width="100%">
+                                    <tbody>
+                                        <tr width="100%">
+                                            <td>
+                                                <div style="background: #ccc; width: 100%; padding: 5px 5px">
+                                                    <strong>Delivery Address</strong>
+                                                </div>
+                                                <div t-field="doc.partner_shipping_id"
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-top: 10px">
+                    <div style="background: #ccc; width: 100%; padding: 5px 5px">
+                        <strong>Ordered Items</strong>
+                    </div>
+                    <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+                    <table width="100%">
+                        <thead>
+                            <t t-set="colspan" t-value="3"/>
+                            <th style="text-align: left; padding: 3px 0; border-bottom: 1px solid #ccc">Product</th>
+                            <th style="text-align: right; padding: 3px 0; border-bottom: 1px solid #ccc">Qty</th>
+                            <th style="text-align: right; padding: 3px 0; border-bottom: 1px solid #ccc">Unit Price</th>
+                            <th style="text-align: right; padding: 3px 0; border-bottom: 1px solid #ccc" t-if="display_discount">
+                                <span>Disc. (%)</span>
+                                <t t-set="colspan" t-value="colspan + 1"/>
+                            </th>
+                        </thead>
+                        <tbody>
+                            <t t-set="current_subtotal" t-value="0" />
+                            <t t-set="total" t-value="0" />
+                            <t t-set="shipping_fee" t-value="0" />
+                            <t t-set="shipping_name" t-value="" />
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr t-if="line.product_id.type != 'service'">
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" />
+                                    <td style="text-align: left; padding: 3px 0; border-bottom: 1px dotted #ccc"><span t-field="line.name" /></td>
+                                    <td style="text-align: right; padding: 3px 0; border-bottom: 1px dotted #ccc"><span t-field="line.product_uom_qty" /></td>
+                                    <td style="text-align: right; padding: 3px 0; border-bottom: 1px dotted #ccc">
+                                        <span t-esc="line.price_unit"
+                                        t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                                    </td>
+                                </tr>
+                                <t t-if="line.product_id.type == 'service'" t-set="shipping_name" t-value="line.name" />
+                                <t t-if="line.product_id.type == 'service'" t-set="shipping_fee" t-value="line.price_unit" />
+                            </t>
+                            <t t-set="total" t-value="current_subtotal + shipping_fee"/>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 8px">
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td width="50%"></td>
+                                    <td width="50%">
+                                        <table width="100%">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="70%" style="text-align: right"><strong>Subtotal:</strong></td>
+                                                    <td width="30%" style="text-align: right"><span t-esc="current_subtotal" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="70%" style="text-align: right"><strong><span t-esc="shipping_name"/>:</strong></td>
+                                                    <td width="30%" style="text-align: right"><span t-esc="shipping_fee" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' /></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="70%" style="text-align: right; border-top: 1px solid #bbb"><strong>Total (VAT Incl.):</strong></td>
+                                                    <td width="30%" style="text-align: right; border-top: 1px solid #bbb"><strong><span t-esc="total" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' /></strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="website.dashboard_header">
+        <t t-jquery="div[name='website_sale.action_unpaid_orders_ecommerce']" t-operation="replace">
+            <div t-if="widget.dashboards_data.sales.summary.order_unpaid_count" class="o_inner_box o_dashboard_action" title="New orders awaiting confirmation." name="extended_ecommerce.extend_action_unpaid_orders_ecommerce">
+                <div class="o_highlight"><t t-esc="widget.dashboards_data.sales.summary.order_unpaid_count"/></div>
+                New Orders
+            </div>
+        </t>
+        <t t-jquery="div[name='website_sale.sale_order_action_to_invoice']" t-operation="replace">
+            <div t-if="widget.dashboards_data.sales.summary.order_to_invoice_count" class="o_inner_box o_dashboard_action" title="Orders ready to deliver." name="extended_ecommerce.extend_sale_order_action_to_invoice">
+                <div class="o_highlight"><t t-esc="widget.dashboards_data.sales.summary.order_to_invoice_count"/></div>
+                Orders to Deliver
+            </div>
+        </t>
+        <t t-jquery="div[name='website_sale.payment_transaction_action_payments_to_capture']" t-operation="replace">
+            <div t-if="widget.dashboards_data.sales.summary.payment_to_capture_count" class="o_inner_box o_dashboard_action" title="Orders delivered successfully and ready to invoice." name="extended_ecommerce.extend_sale_order_action_to_pay">
+                <div class="o_highlight"><t t-esc="widget.dashboards_data.sales.summary.payment_to_capture_count"/></div>
+                Orders to Invoice
+            </div>
+        </t>
+    </t>
+</templates>

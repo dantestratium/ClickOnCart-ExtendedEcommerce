@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="payment.view_partners_form_payment_defaultcreditcard" model="ir.ui.view">
+            <field name="arch" type="xml">
+                <button name="toggle_active" position="before">
+                    <button type="action" class="oe_stat_button"
+                            icon="fa-credit-card"
+                            attrs="{'invisible': [('is_delivery_partner', '=', True)]}"
+                            name="%(payment.payment_token_action)d"
+                            context="{'search_default_partner_id': active_id}">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="payment_token_count" widget="statinfo" nolabel="1"/>
+                            </span>
+                            <span class="o_stat_text">Credit card(s)</span>
+                        </div>
+                    </button>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>

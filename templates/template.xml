@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="featured_products" name="Dynamic Products">
+        <div t-if="show_banner" class="modal fade" id="homeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="position: relative; background: transparent">
+                    <button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 0; padding: 5px;">
+                        <span>X</span>
+                    </button>
+                    <img onclick="location.href='/promotion/clearance-sale-1'" class="img img-fluid" src="/extended_ecommerce/static/src/images/home-popup-banner.jpg" style="cursor: pointer" />
+                </div>
+            </div>
+        </div>
+        <section class="s_features pt-2 pb-3 d-none d-md-block d-lg-block">
+            <t t-call="extended_ecommerce.categories"/>
+        </section>
+        <t t-set="sale_events" t-value="request.env['website.sale.event'].sudo().generate()"/>
+        <t t-foreach="sale_events" t-as="event">
+            <section class="s_features py-0">
+                <div class="container px-0 oe_website_sale coc-featured-products">
+                    <div class="d-flex bg-white justify-content-between align-items-center py-3 mb-2">
+                        <div class="text-secondary pl-3">
+                            <strong t-esc="event.name" style="text-transform: uppercase;"/>
+
+                            <span class="ml-4" t-if="event.date_end">Ending in: <span t-att-class="'timer-%s' % (event.id)" t-att-data-start="event.date_start" t-att-data-end="event.date_end" /></span>
+                            <script>
+                                $(function(){
+                                    const dom = $('.timer-<t t-esc="event.id"/>')
+                                    const start = dom.data('start')
+                                    const end = dom.data('end')
+
+                                    dom.countdowntimer({
+                                        startDate : start,
+                                        dateAndTime : end
+                                    });
+                                });
+                            </script>
+                        </div>
+
+                        <div class="float-right mr-3">
+                            <a class="float-right pl-2" t-att-href="'/promotion/%s' % slug([event.id, event.name])">
+                                See all <span class="fa fa-angle-right"/>
+                            </a>
+                            <button class="btn btn-sm btn-outline-secondary scroll-to-left d-none d-md-inline"><span class="fa fa-chevron-left" role="img" aria-label="Prev" /></button>
+                            <button class="btn btn-sm btn-outline-secondary scroll-to-right d-none d-md-inline"><span class="fa fa-chevron-right" role="img" aria-label="Next" /></button>
+                        </div>
+                    </div>
+
+                    <div class="row mx-0 pb-1 px-1 px-md-0 px-lg-0 scrollable">
+                        <div t-foreach="event.product_ids[:10]._randomize()" t-as="product" class="col-6 col-md-3 col-lg-2 px-1 d-flex justify-content-between flex-column">
+                            <t t-set="product_href" t-value="'/shop/product/%s' % slug([product.id, product.name])" />
+
+                            <div class="card">
+                                <div class="coc-add-wishlist">
+                                    <t t-set="in_wish" t-value="product._is_in_wishlist()"/>
+                                    <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+                                    <t t-set="secondary_categ" t-value="0 if not product.public_categ_ids[1] else 1"/>
+                                    <button t-if="product_variant_id" type="button" role="button" class="btn btn-danger o_add_wishlist update_sticky_wishlist" style="border-radius: 2px 0 0 0;" t-att-disabled='in_wish or None' title="Add to Wishlist" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant_id" data-action="o_wishlist"><span class="fa fa-heart" role="img" aria-label="Add to wishlist" /></button>
+                                    <a t-att-href="'/shop/category/%s?brands=%s-%s' % (slug([product.public_categ_ids[secondary_categ].id, product.public_categ_ids[secondary_categ].name]), product.brand_id.name, product.brand_id.id)" class="btn btn-secondary w-100">
+                                        FIND SIMILAR
+                                    </a>
+                                </div>
+
+                                <a t-att-href="product_href">
+                                    <span class="card-img-top" t-field="product.image" t-options="{'widget': 'image', 'resize': '300x300'}"/>
+                                </a>
+
+                                <div class="card-body p-2 d-flex justify-content-between flex-column">
+                                    <div>
+                                        <t t-set="namelen" t-value="0 if len(product.name) &lt; 40 else 0 - (len(product.name) - 35)"/>
+                                        <a t-att-href="product_href">
+                                            <span class="card-title" t-esc="product.name if namelen == 0 else product.name[:namelen] + '&#x2026;'" t-att-title="product.name" />
+                                        </a>
+                                    </div>
+
+                                    <div>
+                                        <div class="my-2">
+                                            <span class="price" t-esc="product._get_combination_info()['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            <span t-attf-class="text-muted old-price {{'' if product._get_combination_info()['has_discounted_price'] else 'd-none'}}" t-esc="product._get_combination_info()['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+              />
+                                            <t t-if="product._get_combination_info()['has_discounted_price']">
+                                                <t t-set="show_percent" t-value="100 - round((product._get_combination_info()['price'] / product._get_combination_info()['list_price']) * 100)"/>
+                                                -<span t-esc="show_percent" class="old-price__percent" t-options="{'widget': 'integer'}"/>%
+                                            </t>
+                                        </div>
+
+                                        <div class="text-center" t-if="product._is_add_to_cart_possible()">
+                                            <t t-if="(product.inventory_availability == 'never') or (product.inventory_availability == 'always' and product.qty_available &gt; 0)">
+                                                <button type="button" role="button" t-att-data-product-id="product.product_variant_id.id" class="btn coc-btn__preview--stock ajax_add_cart o_animate_blink" ><span class="fa fa-shopping-cart" /> ADD TO CART</button>
+                                            </t>
+                                            <t t-else="">
+                                                <button class="btn coc-btn__preview--outstock disabled"><span class="fa fa-cube" /> OUT OF STOCK</button>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+
+        <section class="s_features py-2">
+            <div class="container px-0 oe_website_sale coc-featured-products">
+                <div class="d-flex bg-white justify-content-between align-items-center py-3 mb-2">
+                    <div class="text-secondary pl-3">
+                        <strong>JUST FOR YOU</strong>
+                    </div>
+                </div>
+
+                <div class="row mx-0 px-1 px-md-0 px-lg-0">
+                    <div t-foreach="suggested" t-as="product" class="col-6 col-md-3 col-lg-2 px-1 d-flex justify-content-between flex-column">
+                        <t t-set="product_href" t-value="'/shop/product/%s' % slug([product.id, product.name])" />
+
+                        <div class="card mb-2">
+                            <div class="coc-add-wishlist">
+                                <t t-set="in_wish" t-value="product._is_in_wishlist()"/>
+                                <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+                                <t t-set="secondary_categ" t-value="0 if not product.public_categ_ids[1] else 1"/>
+                                <button t-if="product_variant_id" type="button" role="button" class="btn btn-danger o_add_wishlist update_sticky_wishlist" style="border-radius: 2px 0 0 0;" t-att-disabled='in_wish or None' title="Add to Wishlist" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant_id" data-action="o_wishlist"><span class="fa fa-heart" role="img" aria-label="Add to wishlist" /></button>
+                                <a t-att-href="'/shop/category/%s?brands=%s-%s' % (slug([product.public_categ_ids[secondary_categ].id, product.public_categ_ids[secondary_categ].name]), product.brand_id.name, product.brand_id.id)" class="btn btn-secondary w-100">
+                                    FIND SIMILAR
+                                </a>
+                            </div>
+
+                            <a t-att-href="product_href">
+                                <span class="card-img-top" t-field="product.image" t-options="{'widget': 'image', 'resize': '300x300'}"/>
+                            </a>
+                            <div class="card-body p-2 d-flex justify-content-between flex-column">
+                                <div>
+                                    <t t-set="namelen" t-value="0 if len(product.name) &lt; 40 else 0 - (len(product.name) - 35)"/>
+                                    <a t-att-href="product_href">
+                                        <span class="card-title" t-esc="product.name if namelen == 0 else product.name[:namelen] + '&#x2026;'" t-att-title="product.name" />
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <div class="my-2">
+                                        <span class="price" t-esc="product._get_combination_info()['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        <span t-attf-class="text-muted old-price {{'' if product._get_combination_info()['has_discounted_price'] else 'd-none'}}" t-esc="product._get_combination_info()['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+          />
+                                        <t t-if="product._get_combination_info()['has_discounted_price']">
+                                            <t t-set="show_percent" t-value="100 - round((product._get_combination_info()['price'] / product._get_combination_info()['list_price']) * 100)"/>
+                                            -<span t-esc="show_percent" class="old-price__percent" t-options="{'widget': 'integer'}"/>%
+                                        </t>
+                                    </div>
+
+                                    <div class="text-center" t-if="product._is_add_to_cart_possible()">
+                                        <t t-if="(product.inventory_availability == 'never') or (product.inventory_availability == 'always' and product.qty_available &gt; 0)">
+                                            <button type="button" role="button" t-att-data-product-id="product.product_variant_id.id" class="btn coc-btn__preview--stock ajax_add_cart o_animate_blink" ><span class="fa fa-shopping-cart" /> ADD TO CART</button>
+                                        </t>
+                                        <t t-else="">
+                                            <button class="btn coc-btn__preview--outstock disabled"><span class="fa fa-cube" /> OUT OF STOCK</button>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="s_features py-2">
+            <div class="container px-0 oe_website_sale coc-featured-products">
+                <div class="d-flex bg-white justify-content-between align-items-center py-3 mb-2">
+                    <div class="text-secondary pl-3">
+                        <strong>TOP BRANDS</strong>
+                    </div>
+                </div>
+
+                <div class="row mx-0 px-1 px-md-0 px-lg-0">
+                    <div t-foreach="request.env['product.brand'].sudo().generate()" t-as="brand" class="col-6 col-md-3 col-lg-2 px-1 d-flex justify-content-between flex-column">
+                        <a t-att-href="'/shop?brands=%s-%s' % (brand.name, brand.id)">
+                            <div class="card mb-2">
+                                <div class="top-brands">
+                                    <span class="card-img-top" t-field="brand.product_ids._randomize(1)[0].image" t-options="{'widget': 'image', 'resize': '300x300'}"/>
+
+                                    <div style="position: absolute; bottom: -15%; left: 35%; border: 3px solid #fff; background: #fff">
+                                        <span t-field="brand.brand_image" t-options="{'widget': 'image', 'resize': '50x50'}"/>
+                                    </div>
+                                </div>
+
+                                <div class="card-body p-2 d-flex justify-content-between flex-column text-center">
+                                    <div class="mt-4">
+                                        <span class="card-title" t-esc="brand.name" t-att-tile="brand.name" />
+                                    </div>
+
+                                    <div class="small text-secondary">
+                                        <span t-esc="len(brand.product_ids)" /> products
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="s_features py-2">
+            <div class="container px-0 oe_website_sale coc-featured-products">
+                <div class="d-flex bg-white justify-content-between align-items-center py-3 mb-2">
+                    <div class="text-secondary pl-3">
+                        <strong>MOST POPULAR</strong>
+                    </div>
+                </div>
+
+                <div class="row mx-0 px-1 px-md-0 px-lg-0">
+                    <div t-foreach="featured_products" t-as="product" class="col-6 col-md-3 col-lg-2 px-1 d-flex justify-content-between flex-column">
+                        <t t-set="product_href" t-value="'/shop/product/%s' % slug([product.id, product.name])" />
+
+                        <div class="card mb-2">
+                            <div class="coc-add-wishlist">
+                                <t t-set="in_wish" t-value="product._is_in_wishlist()"/>
+                                <t t-set="product_variant_id" t-value="product._get_first_possible_variant_id()"/>
+                                <t t-set="secondary_categ" t-value="0 if not product.public_categ_ids[1] else 1"/>
+                                <button t-if="product_variant_id" type="button" role="button" class="btn btn-danger o_add_wishlist update_sticky_wishlist" style="border-radius: 2px 0 0 0;" t-att-disabled='in_wish or None' title="Add to Wishlist" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant_id" data-action="o_wishlist"><span class="fa fa-heart" role="img" aria-label="Add to wishlist" /></button>
+                                <a t-att-href="'/shop/category/%s?brands=%s-%s' % (slug([product.public_categ_ids[secondary_categ].id, product.public_categ_ids[secondary_categ].name]), product.brand_id.name, product.brand_id.id)" class="btn btn-secondary w-100">
+                                    FIND SIMILAR
+                                </a>
+                            </div>
+
+                            <a t-att-href="product_href">
+                                <span class="card-img-top" t-field="product.image" t-options="{'widget': 'image', 'resize': '300x300'}"/>
+                            </a>
+                            <div class="card-body p-2 d-flex justify-content-between flex-column">
+                                <div>
+                                    <t t-set="namelen" t-value="0 if len(product.name) &lt; 40 else 0 - (len(product.name) - 35)"/>
+                                    <a t-att-href="product_href">
+                                        <span class="card-title" t-esc="product.name if namelen == 0 else product.name[:namelen] + '&#x2026;'" t-att-title="product.name" />
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <div class="my-2">
+                                        <span class="price" t-esc="product._get_combination_info()['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                        <span t-attf-class="text-muted old-price {{'' if product._get_combination_info()['has_discounted_price'] else 'd-none'}}" t-esc="product._get_combination_info()['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+          />
+                                        <t t-if="product._get_combination_info()['has_discounted_price']">
+                                            <t t-set="show_percent" t-value="100 - round((product._get_combination_info()['price'] / product._get_combination_info()['list_price']) * 100)"/>
+                                            -<span t-esc="show_percent" class="old-price__percent" t-options="{'widget': 'integer'}"/>%
+                                        </t>
+                                    </div>
+
+                                    <div class="text-center" t-if="product._is_add_to_cart_possible()">
+                                        <t t-if="(product.inventory_availability == 'never') or (product.inventory_availability == 'always' and product.qty_available &gt; 0)">
+                                            <button type="button" role="button" t-att-data-product-id="product.product_variant_id.id" class="btn coc-btn__preview--stock ajax_add_cart o_animate_blink" ><span class="fa fa-shopping-cart" /> ADD TO CART</button>
+                                        </t>
+                                        <t t-else="">
+                                            <button class="btn coc-btn__preview--outstock disabled"><span class="fa fa-cube" /> OUT OF STOCK</button>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="top_categories" name="Top Categories">
+        <div class="container">
+            <div class="row">
+                <div class="d-none d-md-block d-lg-block col-2 col-md-3 col-lg-2">
+                    <div class="text-center">
+                        <strong>All Categories</strong>
+                    </div>
+                    <ul class="nav nav-pills flex-column coc-nav">
+                        <t t-foreach="categories" t-as="c">
+                            <li class="nav-item">
+                                <a t-att-href="'/shop/category/%s' % slug([c.id, c.name])" t-attf-class="nav-link" style="position: relative;">
+                                    <span t-field="c.name"/> <span t-if="c.child_id" class="fa fa-angle-right" style="position: absolute; right: 2%; top: 20%;" />
+                                </a>
+
+                                <div t-if="c.child_id" class="coc-nav__dropdown">
+                                    <ul class="nav nav-pills flex-column">
+                                        <t t-foreach="c.child_id" t-as="d">
+                                            <li class="nav-item">
+                                                <a t-att-href="'/shop/category/%s' % slug([d.id, d.name])" t-attf-class="nav-link">
+                                                    <span t-field="d.name"/>
+                                                </a>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-9 col-lg-10 text-center">
+                    <div class="row coc-mobile-wrapper">
+                        <t t-foreach="top_categories" t-as="category">
+                            <t t-set="category_href" t-value="'/shop/category/%s' % slug([category.id, category.name])" />
+                            <div class="col-12 col-md-6 col-lg-4 mb-2 coc-category-img">
+                                <a itemprop="url" t-att-href="category_href" style="text-decoration: none; color: black">
+                                    <span t-field="category.image" t-options="{'widget': 'image', 'resize': None}"/>
+                                    <div class="mt-1">
+                                        <strong t-esc="category.name" style="text-transform: uppercase;" />
+                                    </div>
+                                </a>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="categories" name="Categories">
+        <div class="container px-0 oe_website_sale bg-white mt-2" style="border-radius: 2px;">
+            <div class="d-flex justify-content-between align-items-center py-3 coc-home-category">
+                <div class="text-secondary pl-3">
+                    <strong>CATEGORIES</strong>
+                </div>
+            </div>
+
+            <div class="row px-1 coc-wrapper__home-category mx-1 d-none d-md-flex d-lg-flex">
+                <t t-foreach="categories._randomize()" t-as="category">
+                    <div class="text-center p-2" style="border: 1px ridge #efefef;">
+                        <a t-att-href="'/shop/category/%s' % slug([category.id, category.name])" style="text-decoration: none;">
+                            <span t-field="category.image" t-options="{'widget': 'image', 'resize': '64x64'}"/>
+                            <div class="text-dark">
+                                <span t-esc="category.name"/>
+
+                                <div class="small mt-1 text-secondary">
+                                    <t t-set="product_count" t-value="len(category.product_ids)" />
+                                    <span t-esc="product_count"/> products
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </t>
+            </div>
+
+            <div class="row px-1 coc-wrapper__mobile-category mx-1 d-flex d-md-none d-lg-none">
+                <t t-foreach="categories._randomize(9)" t-as="category">
+                    <div class="text-center p-2" style="border: 1px ridge #efefef;">
+                        <a t-att-href="'/shop/category/%s' % slug([category.id, category.name])" style="text-decoration: none;">
+                            <span t-field="category.image" t-options="{'widget': 'image', 'resize': '64x64'}"/>
+                            <div class="text-dark">
+                                <span t-esc="category.name"/>
+
+                                <div class="small mt-1 text-secondary">
+                                    <t t-set="product_count" t-value="len(category.product_ids)" />
+                                    <span t-esc="product_count"/> products
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </t>
+            </div>
+
+            <script>
+                function scrollBtn (referId, dir = 0) {
+                    event.preventDefault();
+
+                    if (dir) {
+                        $('#wrapper-1').animate({
+                            scrollLeft: '+=700px'
+                        }, 100)
+                    } else {
+                        $('#wrapper-1').animate({
+                            scrollLeft: '-=700px'
+                        }, 100)
+                    }
+                }
+            </script>
+        </div>
+    </template>
+
+    <template id="portal_to_ship_orders" name="My Orders - To Ship">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">To Ship Orders</t>
+            </t>
+            <t t-if="not orders">
+                <p>There are currently no to ship orders for your account.</p>
+            </t>
+            <t t-if="orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Sales Order #</span>
+                            <span class='d-block d-md-none'>Ref.</span>
+                        </th>
+                        <th class="text-right">Order Date</th>
+                        <th class="text-center"/>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="orders" t-as="order">
+                    <tr>
+                        <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
+                        <td class="text-right">
+                            <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                            <span class='d-none d-md-inline' t-field="order.date_order" t-options="{'time_only': True}"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-if="order.state == 'done'"  class="badge badge-pill badge-success">
+                                <i class="fa fa-fw fa-check" role="img" aria-label="Done" title="Done"/>Done
+                            </span>
+                        </td>
+                        <td class="text-right"><span t-field="order.amount_total"/></td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_to_receive_orders" name="My Orders - To Receive">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">To Receive Orders</t>
+            </t>
+            <t t-if="not orders">
+                <p>There are currently no to receive orders for your account.</p>
+            </t>
+            <t t-if="orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Sales Order #</span>
+                            <span class='d-block d-md-none'>Ref.</span>
+                        </th>
+                        <th class="text-right">Order Date</th>
+                        <th class="text-center"/>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="orders" t-as="order">
+                    <tr>
+                        <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
+                        <td class="text-right">
+                            <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                            <span class='d-none d-md-inline' t-field="order.date_order" t-options="{'time_only': True}"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-if="order.state == 'done'"  class="badge badge-pill badge-success">
+                                <i class="fa fa-fw fa-check" role="img" aria-label="Done" title="Done"/>Done
+                            </span>
+                        </td>
+                        <td class="text-right"><span t-field="order.amount_total"/></td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_to_confirm_orders" name="My Orders - To Confirm">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">To Confirm Orders</t>
+            </t>
+            <t t-if="not orders">
+                <p>There are currently no to confirm orders for your account.</p>
+            </t>
+            <t t-if="orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Order #</span>
+                            <span class='d-block d-md-none'>Ref.</span>
+                        </th>
+                        <th class="text-right">Order Date</th>
+                        <th class="text-center"/>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="orders" t-as="order">
+                    <tr>
+                        <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
+                        <td class="text-right">
+                            <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                            <span class='d-none d-md-inline' t-field="order.date_order" t-options="{'time_only': True}"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-if="order.state == 'done'"  class="badge badge-pill badge-success">
+                                <i class="fa fa-fw fa-check" role="img" aria-label="Done" title="Done"/>Done
+                            </span>
+                        </td>
+                        <td class="text-right"><span t-field="order.amount_total"/></td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="portal_cancelled_orders" name="My Orders - Cancelled">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Cancelled Orders</t>
+            </t>
+            <t t-if="not orders">
+                <p>There are currently no cancelled orders for your account.</p>
+            </t>
+            <t t-if="orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>
+                            <span class='d-none d-md-inline'>Order #</span>
+                            <span class='d-block d-md-none'>Ref.</span>
+                        </th>
+                        <th class="text-right">Order Date</th>
+                        <th class="text-center"/>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="orders" t-as="order">
+                    <tr>
+                        <td><a t-att-href="order.get_portal_url()"><t t-esc="order.name"/></a></td>
+                        <td class="text-right">
+                            <span t-field="order.date_order" t-options="{'widget': 'date'}"/>&amp;nbsp;
+                            <span class='d-none d-md-inline' t-field="order.date_order" t-options="{'time_only': True}"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-if="order.state == 'done'"  class="badge badge-pill badge-success">
+                                <i class="fa fa-fw fa-check" role="img" aria-label="Done" title="Done"/>Done
+                            </span>
+                        </td>
+                        <td class="text-right"><span t-field="order.amount_total"/></td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

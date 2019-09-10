@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="new_login_layout" inherit_id="web.login" name="Login Layout Inherit">
+        <xpath expr="//div[@class='form-group field-db']" position="replace">
+            <div class="form-group field-db" t-if="databases and len(databases) &gt; 1" style="display:none">
+                <label for="db" class="col-form-label">Database</label>
+                <div t-attf-class="input-group {{'input-group-sm' if form_small else ''}}">
+                    <input type="text" name="db" t-att-value="request.db" id="db" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" readonly="readonly"/>
+                    <span class="input-group-append">
+                        <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"></i></a>
+                    </span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

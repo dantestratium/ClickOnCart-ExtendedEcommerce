@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="sale_management.sale_order_view_form" model="ir.ui.view">
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_quotation_send']" position="before">
+                    <field name="is_delivered" invisible="1"/>
+
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d"
+                        string="Create Invoice"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': ['|', ('is_delivered', '=', False), ('invoice_count', '=', 1)]}"/>
+
+                    <button name="action_view_delivery" string="Create Delivery"
+                        type="object" class="btn-primary"
+                        attrs="{'invisible': ['|', ('status_desc', 'in', ('delivered', 'received', 'done')), ('state', '!=', 'sale')]}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='preview_sale_order']" position="replace">
+                    <button name="preview_sale_order" type="object" string="Preview" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//button[@class='btn-primary o_sale_print']" position="replace">
+                    <button name="print_quotation" string="Print" type="object" states="draft" class="btn-primary o_sale_print" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//button[@class='o_sale_print']" position="replace">
+                    <button name="print_quotation" string="Print" type="object" states="sale,done" class="btn-success o_sale_print"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="status_desc" readonly="1"/>
+                </xpath>
+                <xpath expr="//notebook//page[@name='other_information']" position="after">
+                    <page string="Payment Transactions" name="mode_payment">
+                        <group>
+                            <field name="transaction_ids"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale.crm_lead_partner_kanban_view" model="ir.ui.view">
+            <field name="arch" type="xml">
+                <field name="mobile" position="after">
+                    <field name="is_delivery_partner" invisible="1"/>
+                    <field name="sale_order_count" attrs="{'invisible': [('is_delivery_partner', '=', True)]}"/>
+                    <field name="delivery_count" attrs="{'invisible': [('is_delivery_partner', '=', False)]}"/>
+                </field>
+                <xpath expr="//div[hasclass('oe_kanban_partner_links')]" position="inside">
+                    <span t-if="record.sale_order_count.value>0" class="badge badge-pill" attrs="{'invisible': [('is_delivery_partner', '=', True)]}">
+                        <i class="fa fa-fw fa-usd" role="img" aria-label="Sale orders" title="Sales orders"/><t t-esc="record.sale_order_count.value"/>
+                    </span>
+                    <span t-if="record.delivery_count and record.delivery_count.value > 0" class="badge badge-pill" attrs="{'invisible': [('is_delivery_partner', '=', False)]}">
+                        <i class="fa fa-fw fa-truck" role="img" aria-label="Order Deliveries" title="Order Deliveries"/><t t-esc="record.delivery_count.value"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

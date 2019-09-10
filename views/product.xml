@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="extend_product_pricelist_item_form_view" model="ir.ui.view">
+            <field name="name">extend.product.pricelist.item.form</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="brand_id" attrs="{'invisible':[('applied_on', '!=', '4_product_brand')], 'required':[('applied_on', '=', '4_product_brand')]}"/>
+                    <field name="sale_event_id" attrs="{'invisible':[('applied_on', '!=', '5_sale_event')], 'required':[('applied_on', '=', '5_sale_event')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="extend_product_public_category_form_view" model="ir.ui.view">
+            <field name="name">extend.product.public.category.form</field>
+            <field name="model">product.public.category</field>
+            <field name="inherit_id" ref="website_sale.product_public_category_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="after">
+                    <field name="icon" widget='image' class="oe_avatar"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="account.partner_view_button_contracts_count" model="ir.ui.view">
+            <field name="arch" type="xml">
+                <button name="toggle_active" position="before">
+                    <button class="oe_stat_button" type="action" name="%(account.action_open_partner_analytic_accounts)d"
+                        attrs="{'invisible': [('is_delivery_partner', '=', True)]}"
+                        groups="account.group_account_invoice"
+                        icon="fa-book" title="Analytic Accounts">
+                        <field string="Analytic Accounts" name="contracts_count" widget="statinfo"/>
+                    </button>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>

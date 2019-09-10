@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_picking_form_extend" model="ir.ui.view">
+            <field name="name">stock.picking.form.extend.inherit.website.sale.stock</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_assign']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_validate']" position="replace">
+                    <button name="button_validate" attrs="{'invisible': ['|', ('state', 'in', ('waiting','confirmed','delivery','done'))]}" string="Confirm" type="object" class="oe_highlight" groups="stock.group_stock_manager"/>
+                    <button name="button_validate" attrs="{'invisible': ['|', ('state', 'not in', ('delivery'))]}" string="Done" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,delivery,done" />
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" domain="[('is_delivery_partner', '=', True)]"/>
+                </xpath>
+                <xpath expr="//button[@name='button_scrap']" position="attributes">
+                    <attribute name="groups">stock.group_stock_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="extend_view_picking_internal_search" model="ir.ui.view">
+            <field name="name">extend.stock.picking.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <search string="Picking Lists">
+                    <field name="name" string="Picking List" filter_domain="['|',('name','ilike', self),('origin','ilike',self)]"/>
+                    <filter name="delivery" string="On Delivery" domain="[('state','=','delivery')]" help="Orders Scheduled for Delivery"/>
+                    <filter name="done" string="Done" domain="[('state','=','done')]" help="Pickings already processed"/>
+                    <filter name="cancel" string="Cancelled" domain="[('state','=', 'cancel')]" help="Cancelled Moves"/>
+                    <separator/>
+
+                    <field name="partner_id" filter_domain="[('partner_id','child_of',self)]"/>
+                    <field name="product_id"/>
+                    <field name="picking_type_id"/>
+                    <field name="group_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Order Date" name="order_date" domain="[]"  context="{'group_by':'date'}"/>
+                        <filter string="Scheduled Date" name="expected_date" domain="[]" context="{'group_by': 'scheduled_date'}"/>
+                        <filter string="Origin" name="origin" domain="[]" context="{'group_by':'origin'}"/>
+                        <filter name="picking_type" string="Operation Type" domain="[]" context="{'group_by':'picking_type_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_partner_for_delivery" model="ir.actions.act_window">
+            <field name="name">Deliveries</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{"search_default_delivery":1}</field>
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="search_view_id" ref="extend_view_picking_internal_search"/>
+            <field name="domain">[('partner_id.user_id','=',uid)]</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                There is no delivery yet
+              </p>
+            </field>
+        </record>
+
+        <menuitem name="Deliveries" id="menu_user_deliveries" sequence="1"
+            action="action_partner_for_delivery"
+            web_icon="fleet,static/description/icon.png"
+            />
+    </data>
+</openerp>

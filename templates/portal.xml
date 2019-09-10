@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="extend_portal_my_home" inherit_id="portal.portal_my_home" name="My Orders">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="replace">
+            <div class="o_portal_my_home">
+                <div class="oe_structure" id="oe_structure_portal_my_home_1"/>
+                    <h3>My Orders</h3>
+                <div class="o_portal_docs list-group">
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="extend_sign_in" inherit_id="portal.portal_show_sign_in">
+        <xpath expr="//a[@t-attf-href='/web/login']" position="replace">
+            <a t-attf-href="/web/login" class="nav-link" style="cursor: pointer;">
+                <img width="32" class="account-icon" src="/extended_ecommerce/static/src/images/account_dark.svg"/>
+            </a>
+        </xpath>
+
+        <xpath expr="//ul//a[@class='nav-link dropdown-toggle']" position="replace">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <img width="32" class="account-icon" src="/extended_ecommerce/static/src/images/account_dark.svg"/>
+            </a>
+        </xpath>
+    </template>
+</odoo>

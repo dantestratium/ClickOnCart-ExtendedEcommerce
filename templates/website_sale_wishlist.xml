@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="extend_website_sale_wishlist" inherit_id="website_sale_wishlist.header" name="Header Shop Wishlist Link">
+        <xpath expr="//ul//a[@href='/shop/wishlist']" position="replace">
+            <a href="/shop/wishlist" class="nav-link" style="cursor: pointer; position: relative" title="My Wishlist">
+                <sup t-attf-class="my_wish_quantity o_animate_blink badge badge-pill badge-danger" style="position: absolute; top: 5%; right: 1%"><t t-esc='wishcount'/></sup>
+                <img width="32" class="wishlist-icon" src="/extended_ecommerce/static/src/images/wishlist_dark.svg"/>
+            </a>
+        </xpath>
+    </template>
+</odoo>

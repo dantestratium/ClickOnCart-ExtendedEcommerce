@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="banner_form_view" model="ir.ui.view">
+            <field name="name">website.banner.form</field>
+            <field name="model">website.banner</field>
+            <field name="arch" type="xml">
+                <form string="Website Banners">
+                    <sheet>
+                        <field name="url" widget="image"/>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="name" string="Name"/>
+                                    <h1><field name="name" placeholder="Banner Name"/></h1>
+                                </div>
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="type" string="Type"/>
+                                    <field name="type"/>
+                                </div>
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="sequence" string="Sequence"/>
+                                    <field name="sequence"/>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="type" string="State"/>
+                                    <field name="state"/>
+                                </div>
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="link" string="Url Link"/>
+                                    <field name="link" placeholder="Url Link" autocomplete="off"/>
+                                </div>
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="date_start" string="Start Date"/>
+                                    <field name="date_start" placeholder="Start Date" autocomplete="off"/>
+                                </div>
+                                <div class="oe_title">
+                                    <label class="oe_edit_only" for="date_end" string="End Date"/>
+                                    <field name="date_end" placeholder="End Date" autocomplete="off"/>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="banner_tree_view" model="ir.ui.view">
+            <field name="name">website.banner.tree</field>
+            <field name="model">website.banner</field>
+            <field name="field_parent" eval="False" />
+            <field name="arch" type="xml">
+                <tree string="Website Banners">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" />
+                    <field name="type" />
+                    <field name="url" widget="image" class="oe_banner_thumbnail"/>
+                    <field name="state" />
+                    <field name="date_start" />
+                    <field name="date_end" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="banners_action" model="ir.actions.act_window">
+            <field name="name">Banners</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">website.banner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click create to define a new banner.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="banners_action" id="banners"
+              name="Banners"
+              parent="website.menu_website_configuration" sequence="3"/>
+    </data>
+</openerp>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="action_view_delivery_tree" model="ir.actions.act_window">
+            <field name="name">Delivery Partners</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('is_delivery_partner', '=', True)]</field>
+            <field name="priority" eval="30"/>
+            <field name="view_id" ref="base.res_partner_kanban_view"/>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    There is no delivery partner yet
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_orders_delivery" name="Delivery Partners"
+        action="action_view_delivery_tree"
+        parent="website_sale.menu_orders" sequence="3"/>
+    </data>
+</openerp>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="extend_style_frontend" name="Custom css for website" inherit_id="website.assets_frontend">
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" type="text/scss" href="/extended_ecommerce/static/src/scss/frontend.scss" />
+        </xpath>
+
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/extended_ecommerce/static/src/js/website_sale_cart.js"></script>
+            <script type="text/javascript" src="/extended_ecommerce/static/src/js/website_sale_wishlist.js"></script>
+            <script type="text/javascript" src="/extended_ecommerce/static/src/js/vendor/jquery.countdownTimer.min.js"></script>
+        </xpath>
+    </template>
+
+    <template id="extend_style_backend" inherit_id="web.assets_backend" name="Website Backend Assets (used in backend interface)">
+        <xpath expr="//link[last()]" position="after">
+            <link rel="stylesheet" type="text/css" href="/extended_ecommerce/static/src/css/backend.css"/>
+        </xpath>
+    </template>
+
+    <template id="extend_search_button" inherit_id="website.website_search_box">
+        <xpath expr="//div[@class='input-group']" position="replace">
+            <div class="input-group">
+                <input type="text" name="search" class="search-query form-control oe_search_box" placeholder="Search products..." t-att-value="search"/>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary oe_search_button" aria-label="Search" title="Search"><i class="fa fa-search" style="font-size: 130%"/></button>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="add_title_references_to_bar" inherit_id="website.snippets" name="Place into building blocks bar">
+        <xpath expr="//div[@id='snippet_structure']" position="inside">
+            <div class="o_panel_body">
+                <t t-snippet="extended_ecommerce.featured_products"
+                   t-thumbnail="/website/static/src/img/snippets_thumbs/s_features.png"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="banner">
+        <t t-set="banners" t-value="request.env['website.banner'].generate()"/>
+        <t t-set="side_banners" t-value="request.env['website.banner'].generate('side')"/>
+        <div class="container px-0 d-none d-md-block d-lg-block">
+            <div class="row">
+                <div class="col-9 pr-1">
+                    <div id="myCarousel1567135242295" class="s_carousel carousel slide s_carousel_default" data-interval="3000">
+                        <ol class="carousel-indicators">
+                            <t t-foreach="banners" t-as="banner">
+                                <li data-target="#myCarousel1567135242295" t-att-data-slide-to="'%s' % (banners.index(banner))" t-att-class="'active' if banners[0].id == banner.id else ''"/>
+                            </t>
+                        </ol>
+
+                        <div class="carousel-inner text-center">
+                            <t t-foreach="banners" t-as="banner">
+                                <div t-att-class="'carousel-item oe_custom_bg oe_img_bg active' if banners[0].id == banner.id else 'carousel-item oe_custom_bg oe_img_bg'" data-name="Slide">
+                                    <a t-att-href="banner.link if banner.link else '#'">
+                                        <img class="img img-fluid" t-att-src="'/web/image/website.banner/%s/url' % (banner.id)"/>
+                                    </a>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 pl-0 d-flex flex-column justify-content-between">
+                    <t t-foreach="side_banners[:3]" t-as="banner">
+                        <a t-att-href="banner.link if banner.link else '#'">
+                            <img class="img img-fluid" t-att-src="'/web/image/website.banner/%s/url' % (banner.id)"/>
+                        </a>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
