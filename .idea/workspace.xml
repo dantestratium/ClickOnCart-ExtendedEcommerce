@@ -2,7 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b5dbda5-a9ee-4654-b96f-2f6b18c6c968" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/website_sale.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/website_sale.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/src/js/vendor/jquery.countdownTimer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/src/js/vendor/jquery.countdownTimer.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template.xml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/website.xml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/website.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/website_sale.xml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/website_sale.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,11 +20,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/template.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+            <state relative-caret-position="693">
+              <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/src/js/countdown.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="801">
+              <caret line="84" column="40" selection-start-line="84" selection-start-column="40" selection-end-line="84" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/src/scss/countdown.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1302">
+              <caret line="62" selection-start-line="62" selection-end-line="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/website.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="588">
+              <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -24,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/product.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="86" lean-forward="true" selection-start-line="86" selection-end-line="86" />
+            <state relative-caret-position="2709">
+              <caret line="135" column="45" selection-start-line="135" selection-start-column="45" selection-end-line="135" selection-end-column="45" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -34,52 +78,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/src/scss/frontend.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/website_sale.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15309">
-              <caret line="729" column="22" lean-forward="true" selection-start-line="729" selection-start-column="22" selection-end-line="729" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/portal.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#29#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/stock.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="966">
-              <caret line="47" column="53" selection-start-line="47" selection-start-column="53" selection-end-line="47" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/website_sale.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="16" column="26" lean-forward="true" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+            <state relative-caret-position="405">
+              <caret line="443" column="43" selection-start-line="443" selection-start-column="43" selection-end-line="443" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -87,26 +89,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/website_sale.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="253" column="21" lean-forward="true" selection-start-line="253" selection-start-column="21" selection-end-line="253" selection-end-column="21" />
+            <state relative-caret-position="4326">
+              <caret line="218" column="34" selection-start-line="218" selection-start-column="34" selection-end-line="218" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/payment.xml">
+        <entry file="file:///usr/lib/python3/dist-packages/odoo/addons/website_sale/controllers/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/portal.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" column="56" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="56" />
+            <state relative-caret-position="3087">
+              <caret line="161" selection-start-line="161" selection-end-line="161" />
             </state>
           </provider>
         </entry>
@@ -123,28 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>product.na</find>
-      <find>product.name</find>
-      <find>coc-add-wishlist</find>
-      <find>coc-fe</find>
-      <find>coc-add</find>
-      <find>slug</find>
-      <find>coc-home-c</find>
-      <find>scroll</find>
-      <find>__more-category</find>
-      <find>coc-fea</find>
-      <find>card-deck</find>
-      <find>coc-wrap</find>
-      <find>card-d</find>
-      <find>card-de</find>
-      <find>show_percent</find>
-      <find>0 0</find>
-      <find>MoRe F</find>
-      <find>prod-list</find>
-      <find>px-1</find>
-      <find>HOme</find>
-      <find>def sho</find>
-      <find>Home</find>
       <find>similar</find>
       <find>Find SIm</find>
       <find>Simila</find>
@@ -153,6 +124,28 @@
       <find>brand</find>
       <find>filtered</find>
       <find>row mx-</find>
+      <find>font-weight: 600; color: #1f3365;</find>
+      <find>bran</find>
+      <find>js</find>
+      <find>domain</find>
+      <find>desc</find>
+      <find>js_att</find>
+      <find>colorDefinition</find>
+      <find>font-size</find>
+      <find>px</find>
+      <find>1em</find>
+      <find>/ 2</find>
+      <find>/ 4</find>
+      <find>flip-clock-labe</find>
+      <find>label</find>
+      <find>-label</find>
+      <find>-dot</find>
+      <find>ceil</find>
+      <find>/ 5</find>
+      <find>border-ra</find>
+      <find>color</find>
+      <find>:bef</find>
+      <find>Sorty</find>
     </findStrings>
     <replaceStrings>
       <replace>coc-btn</replace>
@@ -179,6 +172,8 @@
       <replace>$muted-color</replace>
       <replace>coc-sidenav__hide</replace>
       <replace>dark.svg</replace>
+      <replace>/ 4</replace>
+      <replace>/ 6</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/views</dir>
@@ -186,8 +181,8 @@
       <dir>$PROJECT_DIR$/static/src/js</dir>
       <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/controllers</dir>
-      <dir>$PROJECT_DIR$/templates</dir>
       <dir>$PROJECT_DIR$/models</dir>
+      <dir>$PROJECT_DIR$/templates</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -196,9 +191,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/views/sale_view.xml" />
-        <option value="$PROJECT_DIR$/views/payment_view.xml" />
-        <option value="$PROJECT_DIR$/views/sale_management_view.xml" />
         <option value="$PROJECT_DIR$/views/account_view.xml" />
         <option value="$PROJECT_DIR$/templates/website_sale_template.xml" />
         <option value="$PROJECT_DIR$/templates/website_template.xml" />
@@ -234,19 +226,22 @@
         <option value="$PROJECT_DIR$/views/sale_event.xml" />
         <option value="$PROJECT_DIR$/static/src/js/website_sale_cart.js" />
         <option value="$PROJECT_DIR$/models/website_sale_event.py" />
-        <option value="$PROJECT_DIR$/templates/website.xml" />
         <option value="$PROJECT_DIR$/models/banner.py" />
         <option value="$PROJECT_DIR$/models/sale.py" />
         <option value="$PROJECT_DIR$/controllers/web.py" />
-        <option value="$PROJECT_DIR$/controllers/website_sale.py" />
         <option value="$PROJECT_DIR$/static/src/js/website_sale_wishlist.js" />
         <option value="$PROJECT_DIR$/static/src/xml/payment.xml" />
         <option value="$PROJECT_DIR$/__manifest__.py" />
         <option value="$PROJECT_DIR$/templates/payment.xml" />
         <option value="$PROJECT_DIR$/static/src/scss/frontend.scss" />
         <option value="$PROJECT_DIR$/models/product.py" />
-        <option value="$PROJECT_DIR$/templates/website_sale.xml" />
+        <option value="$PROJECT_DIR$/controllers/website_sale.py" />
+        <option value="$PROJECT_DIR$/static/src/js/vendor/flipclock/flipclock.css" />
+        <option value="$PROJECT_DIR$/static/src/js/vendor/flipclock/flipclock.scss" />
+        <option value="$PROJECT_DIR$/templates/website.xml" />
+        <option value="$PROJECT_DIR$/static/src/scss/countdown.scss" />
         <option value="$PROJECT_DIR$/templates/template.xml" />
+        <option value="$PROJECT_DIR$/templates/website_sale.xml" />
       </list>
     </option>
   </component>
@@ -270,6 +265,53 @@
               <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
               <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="scss" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="extended_ecommerce" type="b2602c69:ProjectViewProjectNode" />
+              <item name="extended_ecommerce" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -279,7 +321,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../odoo/addons" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
@@ -287,6 +329,9 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/static/src/scss" />
+      <recent name="$PROJECT_DIR$/static/src/css" />
+      <recent name="$PROJECT_DIR$/static/src/js" />
+      <recent name="$PROJECT_DIR$/static/src/js/vendor/flipclock" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -343,7 +388,9 @@
       <workItem from="1567646720084" duration="20101000" />
       <workItem from="1567729619088" duration="25909000" />
       <workItem from="1567988691196" duration="14942000" />
-      <workItem from="1568074661429" duration="10782000" />
+      <workItem from="1568074661429" duration="12742000" />
+      <workItem from="1568161995944" duration="22811000" />
+      <workItem from="1568190620923" duration="601000" />
     </task>
     <task id="LOCAL-00001" summary="-update">
       <created>1564537737411</created>
@@ -384,13 +431,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="524326000" />
+    <option name="totallyTimeSpent" value="549698000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="0" width="1928" height="1054" extended-state="6" />
+    <frame x="-4" y="0" width="1928" height="1054" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1664888" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1696905" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.33039647" />
@@ -423,34 +471,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="-update" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/account.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/sale.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="42" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/src/css/backend.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/brand.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="987">
-          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/src/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-602">
@@ -548,25 +568,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/src/js/vendor/jquery.countdownTimer.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/src/js/vendor/jquery.countdownTimer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="40" lean-forward="true" selection-start-line="12" selection-start-column="40" selection-end-line="12" selection-end-column="40" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/static/src/js/vendor/jquery.countdownTimer.min.js" />
     <entry file="file://$PROJECT_DIR$/security/ir.model.access.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -591,24 +593,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python3/dist-packages/odoo/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85785">
           <caret line="4122" column="33" selection-start-line="4122" selection-start-column="33" selection-end-line="4122" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/website.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="61" column="30" lean-forward="true" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -724,6 +712,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/static/src/scss/frontend.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/portal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
@@ -760,46 +755,76 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/website_sale.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="16" column="26" lean-forward="true" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+        <state relative-caret-position="294">
+          <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/website_sale.py">
+    <entry file="file://$PROJECT_DIR$/static/src/js/vendor/jquery.countdownTimer.js" />
+    <entry file="file://$PROJECT_DIR$/static/src/js/vendor/flipclock/flipclock.scss" />
+    <entry file="file://$PROJECT_DIR$/templates/template.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="253" column="21" lean-forward="true" selection-start-line="253" selection-start-column="21" selection-end-line="253" selection-end-column="21" />
+        <state relative-caret-position="693">
+          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/src/scss/frontend.scss">
+    <entry file="file://$PROJECT_DIR$/static/src/scss/countdown.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="64" column="21" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+        <state relative-caret-position="1302">
+          <caret line="62" selection-start-line="62" selection-end-line="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/website.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/product.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="86" lean-forward="true" selection-start-line="86" selection-end-line="86" />
+        <state relative-caret-position="2709">
+          <caret line="135" column="45" selection-start-line="135" selection-start-column="45" selection-end-line="135" selection-end-column="45" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/website_sale.xml">
+    <entry file="file://$PROJECT_DIR$/controllers/website_sale.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15309">
-          <caret line="729" column="22" lean-forward="true" selection-start-line="729" selection-start-column="22" selection-end-line="729" selection-end-column="22" />
+        <state relative-caret-position="4326">
+          <caret line="218" column="34" selection-start-line="218" selection-start-column="34" selection-end-line="218" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template.xml">
+    <entry file="file:///usr/lib/python3/dist-packages/odoo/addons/website_sale/controllers/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="18" column="41" selection-start-line="18" selection-start-column="41" selection-end-line="18" selection-end-column="41" />
+        <state relative-caret-position="3087">
+          <caret line="161" selection-start-line="161" selection-end-line="161" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/website_sale.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="443" column="43" selection-start-line="443" selection-start-column="43" selection-end-line="443" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/src/js/countdown.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="801">
+          <caret line="84" column="40" selection-start-line="84" selection-start-column="40" selection-end-line="84" selection-end-column="40" />
         </state>
       </provider>
     </entry>

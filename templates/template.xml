@@ -18,26 +18,25 @@
         <t t-foreach="sale_events" t-as="event">
             <section class="s_features py-0">
                 <div class="container px-0 oe_website_sale coc-featured-products">
-                    <div class="d-flex bg-white justify-content-between align-items-center py-3 mb-2">
-                        <div class="text-secondary pl-3">
-                            <strong t-esc="event.name" style="text-transform: uppercase;"/>
+                    <div class="row bg-white py-3 mb-2 mx-0">
+                        <div class="col-9 d-md-flex align-items-center">
+                            <div class="text-secondary">
+                                <strong t-esc="event.name" style="text-transform: uppercase;"/>
+                            </div>
 
-                            <span class="ml-4" t-if="event.date_end">Ending in: <span t-att-class="'timer-%s' % (event.id)" t-att-data-start="event.date_start" t-att-data-end="event.date_end" /></span>
-                            <script>
-                                $(function(){
-                                    const dom = $('.timer-<t t-esc="event.id"/>')
-                                    const start = dom.data('start')
-                                    const end = dom.data('end')
-
-                                    dom.countdowntimer({
-                                        startDate : start,
-                                        dateAndTime : end
+                            <div t-if="event.date_end" t-att-id="'timer-%s' % (event.id)">
+                                <script>
+                                    $(function(){
+                                        const date = new Date("<t t-esc="event.date_end"/>")
+                                        $('#timer-<t t-esc="event.id" />').countdown({
+                                            timestamp: date
+                                        });
                                     });
-                                });
-                            </script>
+                                </script>
+                            </div>
                         </div>
 
-                        <div class="float-right mr-3">
+                        <div class="col-3 text-right">
                             <a class="float-right pl-2" t-att-href="'/promotion/%s' % slug([event.id, event.name])">
                                 See all <span class="fa fa-angle-right"/>
                             </a>

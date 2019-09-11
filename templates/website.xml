@@ -3,12 +3,13 @@
     <template id="extend_style_frontend" name="Custom css for website" inherit_id="website.assets_frontend">
         <xpath expr="link[last()]" position="after">
             <link rel="stylesheet" type="text/scss" href="/extended_ecommerce/static/src/scss/frontend.scss" />
+            <link rel="stylesheet" type="text/scss" href="/extended_ecommerce/static/src/scss/countdown.scss" />
         </xpath>
 
         <xpath expr="//script[last()]" position="after">
             <script type="text/javascript" src="/extended_ecommerce/static/src/js/website_sale_cart.js"></script>
             <script type="text/javascript" src="/extended_ecommerce/static/src/js/website_sale_wishlist.js"></script>
-            <script type="text/javascript" src="/extended_ecommerce/static/src/js/vendor/jquery.countdownTimer.min.js"></script>
+            <script type="text/javascript" src="/extended_ecommerce/static/src/js/countdown.js"></script>
         </xpath>
     </template>
 

@@ -218,7 +218,9 @@ class ExtendWebsiteSale(WebsiteSale):
             'search_categories_ids': [],
             'brands': prod_brands,
             'brand_values': brand_values,
-            'brand_set': brand_set
+            'brand_set': brand_set,
+            'brand_by': post.get('brands'),
+            'order_by': post.get('order')
         }
         if category:
             values['main_object'] = category

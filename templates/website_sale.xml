@@ -17,6 +17,8 @@
                     </div>
                     <t t-if="brands">
                         <form class="js_attributes" method="get">
+                            <input t-if="search" type="hidden" name="search" t-att-value="search" />
+                            <input t-if="order_by" type="hidden" name="order" t-att-value="order_by" />
                             <div id="brands_div" class="d-flex justify-content-center pb-4">
                                 <div class="row col-12">
                                     <t t-foreach="brands" t-as="brand">
@@ -421,27 +423,42 @@
         </xpath>
         <xpath expr="//div[@id='products_grid']" position="replace">
             <div class="col-12 col-md-9 col-lg-9 coc-featured-products px-0">
-                <t t-if="search">
-                    <div class="bg-white py-2 pl-3">
-                        <h5 class="m-0">
+                <div class="text-center bg-white py-2 mb-2">
+                    <t t-if="category">
+                        <div class="my-3">
+                            <h4 style="font-weight: 600; color: #1f3365;">
+                                <span t-esc="category.name if category.child_id else category.parent_id.name"/>
+                            </h4>
+                        </div>
+
+                        <t t-foreach="category.child_id" t-as="cat">
+                            <a t-att-href="keep('/shop/category/' + slug(cat), category=0)" class="btn coc-btn__preview--stock mb4 text-dark"><span t-esc="cat.name" /></a>
+                        </t>
+
+                        <t t-foreach="category.parent_id.child_id" t-as="cat2">
+                            <a t-att-href="keep('/shop/category/' + slug(cat2), category=0)" t-attf-class="btn coc-btn__preview--stock mb4 text-dark#{' coc-btn__preview--active' if cat2.id == int(category or 0) else ''}"><span t-esc="cat2.name" /></a>
+                        </t>
+                    </t>
+
+                    <div class="mt-2 px-2 d-flex justify-content-between align-items-center">
+                        <div t-if="search">
                             <span t-esc="search_count"/> items found for "<strong t-esc='search'/>"
-                        </h5>
+                        </div>
+                        <div>
+                            <form class="form-inline js_attributes" method="get">
+                                <input t-if="search" type="hidden" name="search" t-att-value="search" />
+                                <input t-if="brand_by" type="hidden" name="brands" t-att-value="brand_by" />
+                                <div class="form-group mb-2 align-items-center">
+                                    <label for="sort" class="d-none d-md-inline d-lg-inline mr-1" style="font-weight: 500;">Sort by:</label>
+                                    <select id="sort" name="order" class="form-control">
+                                        <option value="sales_count desc" t-att-selected="1 if order_by == 'sales_count desc' else None">Popularity</option>
+                                        <option value="list_price asc" t-att-selected="1 if order_by == 'list_price asc' else None">Price low to high</option>
+                                        <option value="list_price desc" t-att-selected="1 if order_by == 'list_price desc' else None">Price high to low</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </t>
-                <div t-if="category" class="text-center bg-white py-2 mb-2">
-                    <div class="my-3">
-                        <h4 style="font-weight: 600; color: #1f3365;">
-                            <span t-esc="category.name if category.child_id else category.parent_id.name"/>
-                        </h4>
-                    </div>
-
-                    <t t-foreach="category.child_id" t-as="cat">
-                        <a t-att-href="keep('/shop/category/' + slug(cat), category=0)" class="btn coc-btn__preview--stock mb4 text-dark"><span t-esc="cat.name" /></a>
-                    </t>
-
-                    <t t-foreach="category.parent_id.child_id" t-as="cat2">
-                        <a t-att-href="keep('/shop/category/' + slug(cat2), category=0)" t-attf-class="btn coc-btn__preview--stock mb4 text-dark#{' coc-btn__preview--active' if cat2.id == int(category or 0) else ''}"><span t-esc="cat2.name" /></a>
-                    </t>
                 </div>
 
                 <div t-foreach="bins" t-as="tr_product" class="row mx-0 px-1 px-md-0 px-lg-0">
