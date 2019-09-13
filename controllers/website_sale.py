@@ -246,6 +246,12 @@ class ExtendWebsiteSale(WebsiteSale):
         sup = super(ExtendWebsiteSale, self).product(product, category='', search='', **kwargs)
         sup.qcontext['more_from_category'] = more_categ_array
 
+        if request.session.get('search_keywords_brands'):
+            if product.brand_id.id not in request.session['search_keywords_brands']:
+                request.session['search_keywords_brands'].append(product.brand_id.id)
+        else:
+            request.session['search_keywords_brands'] = [product.brand_id.id]
+
         return sup
 
     @http.route()

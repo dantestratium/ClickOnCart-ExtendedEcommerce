@@ -746,7 +746,7 @@
                     </div>
                 </div>
 
-                <div class="row mx-0 px-1 px-md-0 px-lg-0 scrollable">
+                <div class="row mx-0 px-1 px-md-0 px-lg-0 pb-1 scrollable">
                     <div t-foreach="categ['products']" t-as="product" class="col-6 col-md-3 col-lg-2 px-1 d-flex justify-content-between flex-column">
                         <t t-set="product_href" t-value="'/shop/product/%s' % slug([product.id, product.name])" />
 

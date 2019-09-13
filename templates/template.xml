@@ -24,10 +24,10 @@
                                 <strong t-esc="event.name" style="text-transform: uppercase;"/>
                             </div>
 
-                            <div t-if="event.date_end" t-att-id="'timer-%s' % (event.id)">
+                            <div t-if="event.date_end_formatted" t-att-id="'timer-%s' % (event.id)">
                                 <script>
                                     $(function(){
-                                        const date = new Date("<t t-esc="event.date_end"/>")
+                                        const date = new Date("<t t-esc="event.date_end_formatted"/>")
                                         $('#timer-<t t-esc="event.id" />').countdown({
                                             timestamp: date
                                         });
