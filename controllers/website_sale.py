@@ -7,6 +7,7 @@ from datetime import datetime, time
 from werkzeug.exceptions import NotFound
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 from odoo.addons.website_sale.controllers.backend import WebsiteSaleBackend
+from odoo.addons.payment.controllers.portal import PaymentProcessing
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.addons.http_routing.models.ir_http import slug
 from operator import itemgetter
@@ -358,6 +359,47 @@ class ExtendWebsiteSale(WebsiteSale):
             return request.render("extended_ecommerce.side_cart", values, headers={'Cache-Control': 'no-cache'})
 
         return request.render("website_sale.cart", values)
+
+    @http.route()
+    def payment_validate(self, transaction_id=None, sale_order_id=None, **post):
+        if sale_order_id is None:
+            order = request.website.sale_get_order()
+        else:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            assert order.id == request.session.get('sale_last_order_id')
+
+        if transaction_id:
+            tx = request.env['payment.transaction'].sudo().browse(transaction_id)
+            assert tx in order.transaction_ids()
+        elif order:
+            tx = order.get_portal_last_transaction()
+        else:
+            tx = None
+
+        if not order or (order.amount_total and not tx):
+            return request.redirect('/shop')
+
+        if order and not order.amount_total and not tx:
+            return request.redirect(order.get_portal_url())
+
+        # clean context and session, then redirect to the confirmation page
+        request.website.sale_reset()
+        if tx and tx.state == 'draft':
+            return request.redirect('/shop')
+
+        PaymentProcessing.remove_payment_transaction(tx)
+
+        order.message_subscribe(partner_ids=[3], subtype_ids=[1, 7, 8])
+        order.message_post(
+            body=_('A new order has been placed using %s payment method.') % order.transaction_ids[0].acquirer_id.name,
+            partner_ids=[3],
+            record_name=order.display_name,
+            res_id=order.id,
+            model='sale.order',
+            subtype_id=1,
+            notif_layout='mail.mail_notification_light'
+        )
+        return request.redirect('/shop/confirmation')
 
 
 class TableCompute(object):

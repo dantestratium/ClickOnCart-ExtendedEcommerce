@@ -31,6 +31,15 @@ class StockPicking(models.Model):
             self.sale_id.status_desc = 'delivered'
             self.partner_id.delivery_count += 1
             self.state = 'delivery'
+            self.sale_id.message_post(
+                body='An order has been delivered.',
+                partner_ids=[3],
+                record_name=self.sale_id.display_name,
+                res_id=self.sale_id.id,
+                model='sale.order',
+                subtype_id=1,
+                notif_layout='mail.mail_notification_light'
+            )
 
             return True
 

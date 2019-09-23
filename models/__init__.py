@@ -6,3 +6,4 @@ from . import stock
 from . import website_sale
 from . import banner
 from . import website_sale_event
+from . import mail
