@@ -250,6 +250,9 @@ class Pricelist(models.Model):
                     sale_prod = rule.sale_event_id.product_ids
                     sale_prod_flag = False
                     for s in sale_prod:
+                        if product.type == 'service':
+                            continue
+
                         if s.id == product.product_tmpl_id.id:
                             sale_prod_flag = True
 
